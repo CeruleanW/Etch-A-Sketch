@@ -1,12 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
+import Menu from './components/Menu';
+import Footer from './components/Footer';
+import Board from './components/Board';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Menu />
+    <Board gridNumber = {480} />
   </React.StrictMode>,
   document.getElementById('root')
 );
