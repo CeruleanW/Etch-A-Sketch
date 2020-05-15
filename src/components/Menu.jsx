@@ -17,6 +17,7 @@ function BaseButton(props) {
     )
 }
 
+// Special types of button
 function ClearButton(props) {
     const clearBoard = () => {
 

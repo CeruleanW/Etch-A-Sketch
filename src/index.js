@@ -9,7 +9,8 @@ import Board from './components/Board';
 ReactDOM.render(
   <React.StrictMode>
     <Menu />
-    <Board gridNumber = {480} />
+    <Board />
+    <Footer />
   </React.StrictMode>,
   document.getElementById('root')
 );
