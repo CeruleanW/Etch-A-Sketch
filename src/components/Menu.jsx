@@ -6,6 +6,7 @@ class Menu extends Component {
         super(props);
         this.handleMode = this.handleMode.bind(this);
         this.sendClearCommand = this.sendClearCommand.bind(this);
+        this.handleClear = this.handleClear.bind(this);
         this.state = {
              sendClear: false,
              runningMode: 'BW'
@@ -20,6 +21,10 @@ class Menu extends Component {
         this.setState({sendClear: true});
     }
 
+    handleClear() {
+        this.setState({sendClear: false});
+    }
+
     render() {
         return (
             <div className='main'>
@@ -29,21 +34,10 @@ class Menu extends Component {
                     <BWButton onModeChange={this.handleMode}/>
                     <CustomButton onModeChange={this.handleMode}/>
                 </div>
-                <Board mode={this.state.runningMode} shouldBeClear={this.state.sendClear}/>
+                <Board mode={this.state.runningMode} shouldBeClear={this.state.sendClear} onClear={this.handleClear}/>
             </div>
         );
     }
-}
-
-// Special types of button
-function ClearButton(props) {
-    // const clearBoard = () => {
-    //     props.onClearCommand();
-    // }
-    
-    return (
-        <BaseButton value='clear' onClick={this.props.onClearCommand}/>
-    )
 }
 
 function RainbowButton(props) {
