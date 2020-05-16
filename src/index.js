@@ -2,15 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import Menu from './components/Menu';
-import Footer from './components/Footer';
-import Board from './components/Board';
+import App from './components/App';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Menu />
-    <Board />
-    <Footer />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );

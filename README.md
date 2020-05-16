@@ -9,3 +9,6 @@ You can draw your picture by hovering your mouse on the board.
 ## To do
 
 - state change
+- button controls
+  - clear
+

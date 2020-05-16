@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-
+//props: mode, shouldBeClear,
 export class Board extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            grids: this.initBoard(this.props.gridNumber)
-        };
-        this.handleColorChange = this.handleColorChange.bind(this);
         this.renderGrids = this.renderGrids.bind(this);
+        this.state = {
+            mode: this.props.mode,
+            shouldBeClear: this.props.shouldBeClear
+        }
     }
 
     static defaultProps = { gridNumber: 475 };
@@ -30,16 +30,10 @@ export class Board extends Component {
         return grids;
     }
 
-    handleColorChange(e) {
-        //change the state
-        //change the background color
-        return
-    }
-
     //return all the grids
-    renderGrids() {
+    renderGrids(grids) {
         let rows = [];
-        for (const row of this.state.grids) {
+        for (const row of grids) {
             let cells = [];
             for (const cell of row) {
                 cells.push(<Grid key={cell.key} isColored={cell.isColored} onColorChange={this.handleColorChange}/>)
@@ -50,30 +44,36 @@ export class Board extends Component {
     }
 
     render() {
+        const grids = this.initBoard(this.props.gridNumber);
         return (
             <div className='board'>
-                {this.renderGrids(this.state.grids)}
+                {this.renderGrids(grids)}
             </div>
         )
     }
-
 }
 
 class Grid extends Component {
     constructor(props) {
         super(props);
         this.handleHover = this.handleHover.bind(this);
-        const key = this.props.key;
+        this.state = {
+            isColored: false
+        }
     }
 
-    handleHover(e) {
-        this.props.onColorChange(e);
+    handleHover() {
+        this.setState({isColored: true});
     }
 
     render() {
-        const bgcolor = (this.props.isColored) ? 'black' : 'white';
+        const bgcolor = (this.state.isColored) ? 'black' : 'white';
         return (
-            <div className='grid' onMouseOver={this.handleHover} backgroundColor={bgcolor} ></div>
+            <div className='grid' onMouseOver={this.handleHover} 
+                style={{
+                    backgroundColor: bgcolor
+                }}
+                ></div>
         )
     }
 }

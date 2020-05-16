@@ -1,30 +1,48 @@
-import React from 'react'
+import React, { Component } from 'react'
+import Board from './Board'
 
-function Menu(props) {
-    return (
-        <div className='menu'>
-            <ClearButton />
-            <RainbowButton />
-            <BWButton />
-            <CustomButton />
-        </div>
-    )
-}
+class Menu extends Component {
+    constructor(props) {
+        super(props);
+        this.handleMode = this.handleMode.bind(this);
+        this.sendClearCommand = this.sendClearCommand.bind(this);
+        this.state = {
+             sendClear: false,
+             runningMode: 'BW'
+        };
+    }
 
-function BaseButton(props) {
-    return (
-        <button value={props.value} className='buttons'>{props.value}</button>
-    )
+    handleMode(props) {
+        this.setState({runningMode: props});
+    }
+
+    sendClearCommand() {
+        this.setState({sendClear: true});
+    }
+
+    render() {
+        return (
+            <div className='main'>
+                <div className='menu'>
+                    <button value='clear' className='buttons' onClick={this.sendClearCommand}>Clear</button>
+                    <RainbowButton onModeChange={this.handleMode}/>
+                    <BWButton onModeChange={this.handleMode}/>
+                    <CustomButton onModeChange={this.handleMode}/>
+                </div>
+                <Board mode={this.state.runningMode} shouldBeClear={this.state.sendClear}/>
+            </div>
+        );
+    }
 }
 
 // Special types of button
 function ClearButton(props) {
-    const clearBoard = () => {
-
-    }
+    // const clearBoard = () => {
+    //     props.onClearCommand();
+    // }
     
     return (
-        <BaseButton value='clear' onClick={clearBoard}/>
+        <BaseButton value='clear' onClick={this.props.onClearCommand}/>
     )
 }
 
@@ -49,19 +67,25 @@ function BWButton(props) {
 }
 
 function CustomButton(props) {
-    const setColor = (color) => {
+    const setCustomedColor = (color) => {
 
     }
     
     return (
-        <div>
-            <input type="text" minlength="4" maxlength="8" size="3"></input>
+        <div id='custom-container'>
+            <input type="text" minLength="4" maxLength="8" size="3"></input>
             <span> * </span>
-            <input type="text" minlength="4" maxlength="8" size="3"></input>
-            <BaseButton value='custom' onClick={setColor}/>
+            <input type="text" minLength="4" maxLength="8" size="3"></input>
+            <BaseButton value='custom' onClick={setCustomedColor}/>
         </div>
     )    
 }
 
-export default Menu
+//Base model of buttons
+function BaseButton(props) {
+    return (
+        <button value={props.value} className='buttons'>{props.value}</button>
+    )
+}
 
+export default Menu
