@@ -51,6 +51,7 @@ button {
   user-select: none;
   background-image: none;
   border: 1px solid transparent;
+  margin: 10px;
 }
 
 .menu {

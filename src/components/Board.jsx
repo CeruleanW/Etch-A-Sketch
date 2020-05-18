@@ -1,15 +1,13 @@
 import React, { Component } from 'react'
-//props: mode, shouldBeClear,
+//props: mode, shouldBeClear, onClear, customedColor
 export class Board extends Component {
     constructor(props) {
         super(props);
         this.renderGrids = this.renderGrids.bind(this);
         this.handleColorChange = this.handleColorChange.bind(this);
         this.handleClear = this.handleClear.bind(this);
-        const gridNumber = this.props.gridNumber;
         this.state = {
-            mode: this.props.mode,
-            grids: this.initBoard(this.props.gridNumber)
+            grids: this.initBoard(this.props.gridNumber),
         }
     }
 
@@ -17,19 +15,15 @@ export class Board extends Component {
 
     //input: int    return a 2D array as the board
     initBoard(gridNumber) {
-        let gridsPerRow = Math.floor(Math.sqrt(gridNumber*4/3));
-        let gridsPerCol = Math.floor(gridNumber/gridsPerRow);
-        let grids = new Array(gridsPerCol);
-
-        for (let i=0; i<gridsPerCol; i++) {
-            grids[i] = new Array(gridsPerRow);
-            for (let j=0; j<gridsPerRow; j++) {
-                let keyValue = [i, j];
-                grids[i][j] = {
-                    key: keyValue,
-                    isColored: false,
-                };
-            }
+        const grids = new Array(gridNumber);
+        let keyValue = 0;
+        for (let i=0; i<grids.length; i++) {
+            grids[i] = {
+                position: keyValue,
+                isColored: false,
+                gridColor: ''
+            };
+            keyValue++;
         }
         return grids;
     }
@@ -37,11 +31,9 @@ export class Board extends Component {
     //reset all grids
     handleClear() {
         let tempGrids = this.state.grids;
-        let rows = [];
-        for (const row of tempGrids) {
-            for (const cell of row) {
-                cell.isColored = false;
-            }
+        for (let cell of tempGrids) {
+            cell.isColored = false;
+            cell.gridColor = '';
         }
         this.setState({grids: tempGrids});
         this.props.onClear();
@@ -50,24 +42,43 @@ export class Board extends Component {
     //change the color of the hovered grid
     handleColorChange(position) {
         let tempGrids = this.state.grids;
-        (tempGrids[position[0]][position[1]]).isColored = true;
+        let hoveredColor;
+        switch (this.props.mode) {
+            case 'BW':
+                hoveredColor = 'black';
+                break;
+            case 'rainbow':
+                hoveredColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+                break;
+            case 'customColor':
+                hoveredColor = this.props.customedColor;
+                break;
+            default:
+                hoveredColor = 'black';
+        }
+        (tempGrids[position]).isColored = true;
+        tempGrids[position].gridColor = hoveredColor;
         this.setState({
             grids: tempGrids
         });
     }
 
     //take grids(2D array), return the corresponding components
-    renderGrids(grids) {
+    renderGrids() {
         if (this.props.shouldBeClear) {
             this.handleClear();
         }
+
+        const gridsPerRow = Math.floor(Math.sqrt(this.props.gridNumber*4/3));
+
         let rows = [];
-        for (const row of grids) {
-            let cells = [];
-            for (const cell of row) {
-                cells.push(<Grid position={cell.key} isColored={cell.isColored} onColorChange={this.handleColorChange} />)
+        let cells = [];
+        for (let i=0; i<this.state.grids.length; i++) {
+            if (i%gridsPerRow === 0 && i!==0) {
+                rows.push(<div className='board-row'>{cells}</div>);
+                cells = [];
             }
-            rows.push(<div className='board-row'>{cells}</div>);  
+            cells.push(<Grid position={this.state.grids[i].position} isColored={this.state.grids[i].isColored} onColorChange={this.handleColorChange} gridColor={this.state.grids[i].gridColor}/>)
         }
         return rows;
     }
@@ -75,7 +86,7 @@ export class Board extends Component {
     render() {
         return (
             <div className='board'>
-                {this.renderGrids(this.state.grids)}
+                {this.renderGrids()}
             </div>
         )
     }
@@ -88,15 +99,15 @@ class Grid extends Component {
     }
 
     handleHover() {
-        this.props.onColorChange(this.props.position);
+        if (!this.props.isColored)
+            this.props.onColorChange(this.props.position);
     }
 
     render() {
-        const bgcolor = (this.props.isColored) ? 'black' : 'white';
         return (
             <div className='grid' onMouseOver={this.handleHover} 
                 style={{
-                    backgroundColor: bgcolor
+                    backgroundColor: this.props.gridColor
                 }}
                 ></div>
         )

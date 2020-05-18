@@ -1,5 +1,7 @@
-import React, { Component } from 'react'
-import Board from './Board'
+import React, { Component } from 'react';
+import { useState } from 'react';
+import Board from './Board';
+import CustomColorButton from './CustomColorButton';
 
 class Menu extends Component {
     constructor(props) {
@@ -7,14 +9,21 @@ class Menu extends Component {
         this.handleMode = this.handleMode.bind(this);
         this.sendClearCommand = this.sendClearCommand.bind(this);
         this.handleClear = this.handleClear.bind(this);
+        this.handleCutomSize = this.handleCutomSize.bind(this);
+        this.getColor = this.getColor.bind(this);
         this.state = {
              sendClear: false,
-             runningMode: 'BW'
+             runningMode: 'BW',
+             customedColor: '#81D1FC',
+             gridNumber: 768,
         };
     }
 
-    handleMode(props) {
-        this.setState({runningMode: props});
+    handleMode(id) {
+        if (this.state.runningMode !== id) {
+            this.sendClearCommand();
+            this.setState({runningMode: id});
+        }
     }
 
     sendClearCommand() {
@@ -25,61 +34,60 @@ class Menu extends Component {
         this.setState({sendClear: false});
     }
 
+    handleCutomSize(n) {
+        this.setState({gridNumber: n});
+    }
+
+    getColor(color) {
+        this.setState({customedColor: color});
+    }
+
     render() {
+
         return (
             <div className='main'>
                 <div className='menu'>
-                    <button value='clear' className='buttons' onClick={this.sendClearCommand}>Clear</button>
-                    <RainbowButton onModeChange={this.handleMode}/>
-                    <BWButton onModeChange={this.handleMode}/>
-                    <CustomButton onModeChange={this.handleMode}/>
+                    <button id='clear' className='buttons' onClick={this.sendClearCommand}>Clear</button>
+                    <button id='rainbow' className='buttons' onClick={this.handleMode.bind(this, 'rainbow')}>Rainbow Mode</button>
+                    <button id='BW' className='buttons' onClick={this.handleMode.bind(this, 'BW')}>Black/White Mode</button>
+                    <CustomColorButton onColor={this.getColor} onMode={this.handleMode} />
+                    <CustomButton onSizeChange={this.handleCutomSize}/>
                 </div>
-                <Board mode={this.state.runningMode} shouldBeClear={this.state.sendClear} onClear={this.handleClear}/>
+                <Board mode={this.state.runningMode} shouldBeClear={this.state.sendClear} onClear={this.handleClear} gridNumber={this.state.gridNumber} customedColor={this.state.customedColor}/>
             </div>
         );
     }
 }
 
-function RainbowButton(props) {
-    const setRainbowMode = () => {
 
-    }
-    
-    return (
-        <BaseButton value='rainbow' onClick={setRainbowMode}/>
-    )
-}
-
-function BWButton(props) {
-    const setBWMode = () => {
-
-    }
-    
-    return (
-        <BaseButton value='black-white' onClick={setBWMode} />
-    )
-}
-
+//send: gridNumber      props: onSizeChange
 function CustomButton(props) {
-    const setCustomedColor = (color) => {
+    const [width, setWidth] = useState(24);
+    const [height, setHeight] = useState(18);
 
-    }
-    
+    const sendSize = () => {
+        props.onSizeChange(width*height) ;
+    };
+
+    const setStateFromHeight = (e) => {
+        setHeight(e.target.value);
+        let w = Math.floor(e.target.value/3*4);
+        setWidth(w);
+    };
+    const setStateFromWidth = (e) => {
+        setWidth(e.target.value);
+        let h = Math.floor(e.target.value/4*3);
+        setHeight(h);
+    };
+
     return (
         <div id='custom-container'>
-            <input type="text" minLength="4" maxLength="8" size="3"></input>
+            <input id='custom-width' type="text" minLength="4" maxLength="8" size="3" value={width} onChange={setStateFromWidth}></input>
             <span> * </span>
-            <input type="text" minLength="4" maxLength="8" size="3"></input>
-            <BaseButton value='custom' onClick={setCustomedColor}/>
+            <input id='custom-height' type="text" minLength="4" maxLength="8" size="3" value={height} onChange= {setStateFromHeight}></input>
+            <button value='custom' className='buttons' onClick={sendSize}>Custom Size</button>
         </div>
     )    
-}
-
-//Base model of buttons
-function BaseButton(props) {
-    return (
-        <button value={props.value} className='buttons'>{props.value}</button>
-    )
 }
 
 export default Menu
