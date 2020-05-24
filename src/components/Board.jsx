@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-//props: mode, shouldBeClear, onClear, customedColor
+//props: mode, shouldBeClear, onClear, customizedColor, gridNumber
 export class Board extends Component {
     constructor(props) {
         super(props);
@@ -15,7 +15,7 @@ export class Board extends Component {
 
     //input: int    return a 2D array as the board
     initBoard(gridNumber) {
-        const grids = new Array(gridNumber);
+        let grids = new Array(gridNumber);
         let keyValue = 0;
         for (let i=0; i<grids.length; i++) {
             grids[i] = {
@@ -51,7 +51,7 @@ export class Board extends Component {
                 hoveredColor = '#' + Math.floor(Math.random()*16777215).toString(16);
                 break;
             case 'customColor':
-                hoveredColor = this.props.customedColor;
+                hoveredColor = this.props.customizedColor;
                 break;
             default:
                 hoveredColor = 'black';
@@ -69,16 +69,17 @@ export class Board extends Component {
             this.handleClear();
         }
 
-        const gridsPerRow = Math.floor(Math.sqrt(this.props.gridNumber*4/3));
+        let gridsPerRow = Math.floor(Math.sqrt(this.props.gridNumber*4/3));
 
         let rows = [];
         let cells = [];
-        for (let i=0; i<this.state.grids.length; i++) {
+        let k = 1;
+        for (let i=0; i<this.props.gridNumber; i++) {
             if (i%gridsPerRow === 0 && i!==0) {
-                rows.push(<div className='board-row'>{cells}</div>);
+                rows.push(<div key={'Row' + (k++)} className='board-row'>{cells}</div>);
                 cells = [];
             }
-            cells.push(<Grid position={this.state.grids[i].position} isColored={this.state.grids[i].isColored} onColorChange={this.handleColorChange} gridColor={this.state.grids[i].gridColor}/>)
+            cells.push(<Grid key={i} position={this.state.grids[i].position} isColored={this.state.grids[i].isColored} onColorChange={this.handleColorChange} gridColor={this.state.grids[i].gridColor}/>)
         }
         return rows;
     }

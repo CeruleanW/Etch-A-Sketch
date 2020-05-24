@@ -12,3 +12,8 @@ You can draw your picture by hovering your mouse on the board.
 - button controls
   - clear
 
+
+
+## Used Libraries
+
+- [React Color](https://casesandberg.github.io/react-color)

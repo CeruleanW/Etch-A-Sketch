@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {TwitterPicker} from 'react-color';
+import { InsideColorPicker } from './InsideColorPicker';
 
 const buttonId = 'customColor';
 
@@ -36,6 +36,7 @@ class CustomColorButton extends Component {
             position: 'absolute',
             zIndex: '2',
         }
+
         const cover = {
             position: 'fixed',
             top: '0px',
@@ -45,15 +46,9 @@ class CustomColorButton extends Component {
         }
 
         return (
-            <div>
-                <div>
-                    <button onClick={ this.handleClick }></button>
-                    { this.state.displayColorPicker ? <div style={ popover }>
-                    <div style={ cover } onClick={ this.handleClose }/>
-                    <TwitterPicker onChange={this.sendColor}/>
-                    </div> : null }
-                </div>
-                <button id={buttonId} onClick={this.sendMode}>Custom Color Mode</button>
+            <div className='custom-color-container'>
+                <InsideColorPicker onChange={this.sendColor} />
+                <button onClick={this.sendMode}>Custom Color Mode</button>
             </div>
         );
     }
