@@ -19,6 +19,21 @@ class Menu extends Component {
         };
     }
 
+    //input: int    return a 2D array as the board
+    initBoard(gridNumber) {
+        let grids = new Array(gridNumber);
+        let keyValue = 0;
+        for (let i=0; i<grids.length; i++) {
+            grids[i] = {
+                position: keyValue,
+                isColored: false,
+                gridColor: ''
+            };
+            keyValue++;
+        }
+        return grids;
+    }
+
     handleMode(id) {
         if (this.state.runningMode !== id) {
             this.sendClearCommand();
@@ -53,11 +68,10 @@ class Menu extends Component {
                     <CustomColorButton onColor={this.getColor} onMode={this.handleMode} />
                     <CustomSizeButton onSizeChange={this.handleCutomSize}/>
                 </div>
-                <Board mode={this.state.runningMode} shouldBeClear={this.state.sendClear} onClear={this.handleClear} gridNumber={this.state.gridNumber} customizedColor={this.state.customizedColor}/>
+                <Board mode={this.state.runningMode} shouldBeClear={this.state.sendClear} onClear={this.handleClear} grids={this.initBoard(this.state.gridNumber)} customizedColor={this.state.customizedColor}/>
             </div>
         );
     }
 }
-
 
 export default Menu

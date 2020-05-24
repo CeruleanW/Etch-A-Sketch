@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-//props: mode, shouldBeClear, onClear, customizedColor, gridNumber
+//props: mode, shouldBeClear, onClear, customizedColor, grids
 export class Board extends Component {
     constructor(props) {
         super(props);
@@ -7,26 +7,18 @@ export class Board extends Component {
         this.handleColorChange = this.handleColorChange.bind(this);
         this.handleClear = this.handleClear.bind(this);
         this.state = {
-            grids: this.initBoard(this.props.gridNumber),
+            grids: this.props.grids,
         }
     }
 
-    static defaultProps = { gridNumber: 475 };
-
-    //input: int    return a 2D array as the board
-    initBoard(gridNumber) {
-        let grids = new Array(gridNumber);
-        let keyValue = 0;
-        for (let i=0; i<grids.length; i++) {
-            grids[i] = {
-                position: keyValue,
-                isColored: false,
-                gridColor: ''
-            };
-            keyValue++;
+    static getDerivedStateFromProps(props, state) {
+        if (props.grids.length !== state.grids.length) {
+          return {
+            grids: props.grids,
+          };
         }
-        return grids;
-    }
+        return null;
+      }
 
     //reset all grids
     handleClear() {
@@ -69,12 +61,12 @@ export class Board extends Component {
             this.handleClear();
         }
 
-        let gridsPerRow = Math.floor(Math.sqrt(this.props.gridNumber*4/3));
+        let gridsPerRow = Math.floor(Math.sqrt(this.state.grids.length*4/3));
 
         let rows = [];
         let cells = [];
         let k = 1;
-        for (let i=0; i<this.props.gridNumber; i++) {
+        for (let i=0; i<this.state.grids.length; i++) {
             if (i%gridsPerRow === 0 && i!==0) {
                 rows.push(<div key={'Row' + (k++)} className='board-row'>{cells}</div>);
                 cells = [];
