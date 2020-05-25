@@ -36,17 +36,15 @@ body {
 }
 
 .board {
-	margin: 6px auto;
+	margin: 6px auto 90px auto;
 	overflow: hidden;
 	-webkit-user-select: none;  
 	-moz-user-select: none;    
 	-ms-user-select: none;      
 	user-select: none;
 	box-shadow: 0px 0px 5px 5px #bdc3c7;
-}
-
-.board, .menu {
-	width: 80%;
+	width: fit-content;
+    height: auto;
 }
 
 .board-row {
@@ -72,18 +70,18 @@ textarea {
 
 /* Components in the menu */
 button {
-  align-self: center;
-  background: transparent;
-  padding: 1rem 1rem;
-  margin: 0 1rem;
-  -webkit-transition: all .5s ease;
-  transition: all .5s ease;
-  color: #41403E;
-  font-size: 1rem;
-  letter-spacing: 1px;
-  outline: none;
-  box-shadow: 20px 38px 34px -26px rgba(0, 0, 0, 0.2);
-  border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+	align-self: center;
+	background: transparent;
+	padding: 1rem 1rem;
+	margin: 0 1rem;
+	-webkit-transition: all .5s ease;
+	transition: all .5s ease;
+	color: #41403E;
+	font-size: 1rem;
+	letter-spacing: 1px;
+	outline: none;
+	box-shadow: 20px 38px 34px -26px rgba(0, 0, 0, 0.2);
+	border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
 	margin-bottom: 0;
 	margin: 10px;
 	padding: 8px 10px;
@@ -91,7 +89,7 @@ button {
 	user-select: none;
 	vertical-align: middle;
 	white-space: nowrap;
-  border: solid 7px #41403E;
+    border: solid 7px #41403E;
 }
 
 button:hover {
@@ -99,7 +97,6 @@ button:hover {
 }
 
 .menu {
-	padding: 5px;
     list-style-type: none;
     margin: auto;
 	display:         flex;
@@ -107,6 +104,9 @@ button:hover {
 			align-items: center;
 	-webkit-justify-content: center;
 			justify-content: center;
+	background-color: wheat;
+	margin-bottom: 2rem;
+	padding:0.5rem 10% 0.5rem 10%;
 }
 
 .custom-color-container > * {

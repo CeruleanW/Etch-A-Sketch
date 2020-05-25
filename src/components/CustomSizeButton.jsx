@@ -22,7 +22,7 @@ export function CustomSizeButton(props) {
 
     return (<div id='custom-container'>
         <input id='custom-width' type="text" minLength="4" maxLength="8" size="1" value={width} onChange={setStateFromWidth}></input>
-        <span> * </span>
+        <span> &#215; </span>
         <input id='custom-height' type="text" minLength="4" maxLength="8" size="1" value={height} onChange={setStateFromHeight}></input>
         <button value='custom' className='buttons' onClick={sendSize}>Custom Size</button>
     </div>);

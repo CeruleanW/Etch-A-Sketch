@@ -9,12 +9,12 @@ class Menu extends Component {
         this.handleMode = this.handleMode.bind(this);
         this.sendClearCommand = this.sendClearCommand.bind(this);
         this.handleClear = this.handleClear.bind(this);
-        this.handleCutomSize = this.handleCutomSize.bind(this);
+        this.handleCustomSize = this.handleCustomSize.bind(this);
         this.getColor = this.getColor.bind(this);
         this.state = {
              sendClear: false,
              runningMode: 'BW',
-             customizedColor: '#81D1FC',
+             customizedColor: '#F17013',
              gridNumber: 768,
         };
     }
@@ -49,7 +49,7 @@ class Menu extends Component {
         this.setState({sendClear: false});
     }
 
-    handleCutomSize(n) {
+    handleCustomSize(n) {
         this.sendClearCommand();
         this.setState({gridNumber: n});
     }
@@ -66,7 +66,7 @@ class Menu extends Component {
                     <button id='rainbow' className='buttons' onClick={this.handleMode.bind(this, 'rainbow')}>Rainbow Mode</button>
                     <button id='BW' className='buttons' onClick={this.handleMode.bind(this, 'BW')}>Black/White Mode</button>
                     <CustomColorButton onColor={this.getColor} onMode={this.handleMode} />
-                    <CustomSizeButton onSizeChange={this.handleCutomSize}/>
+                    <CustomSizeButton onSizeChange={this.handleCustomSize}/>
                 </div>
                 <Board mode={this.state.runningMode} shouldBeClear={this.state.sendClear} onClear={this.handleClear} grids={this.initBoard(this.state.gridNumber)} customizedColor={this.state.customizedColor}/>
             </div>
