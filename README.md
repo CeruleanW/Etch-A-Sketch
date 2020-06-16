@@ -1,19 +1,11 @@
 # Etch-a-sketch
 
-This is a webpage simulating a simple "Etch A Sketch".
+A webpage simulating a simple "Etch A Sketch" game.
 
 You can draw your picture by hovering your mouse on the board.
 
-
-
-## To do
-
-- state change
-- button controls
-  - clear
-
-
-
 ## Used Libraries
+
+- React.js
 
 - [React Color](https://casesandberg.github.io/react-color)
