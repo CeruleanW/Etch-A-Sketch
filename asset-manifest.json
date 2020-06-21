@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/etch-a-sketch/static/css/main.1676c273.chunk.css",
+    "main.js": "/etch-a-sketch/static/js/main.04db05f9.chunk.js",
+    "main.js.map": "/etch-a-sketch/static/js/main.04db05f9.chunk.js.map",
+    "runtime-main.js": "/etch-a-sketch/static/js/runtime-main.a0b1b257.js",
+    "runtime-main.js.map": "/etch-a-sketch/static/js/runtime-main.a0b1b257.js.map",
+    "static/js/2.cac89be4.chunk.js": "/etch-a-sketch/static/js/2.cac89be4.chunk.js",
+    "static/js/2.cac89be4.chunk.js.map": "/etch-a-sketch/static/js/2.cac89be4.chunk.js.map",
+    "index.html": "/etch-a-sketch/index.html",
+    "precache-manifest.1ad14d02b9d240291e6b52898e30cd08.js": "/etch-a-sketch/precache-manifest.1ad14d02b9d240291e6b52898e30cd08.js",
+    "service-worker.js": "/etch-a-sketch/service-worker.js",
+    "static/css/main.1676c273.chunk.css.map": "/etch-a-sketch/static/css/main.1676c273.chunk.css.map",
+    "static/js/2.cac89be4.chunk.js.LICENSE.txt": "/etch-a-sketch/static/js/2.cac89be4.chunk.js.LICENSE.txt",
+    "static/media/index.css": "/etch-a-sketch/static/media/alexbrush-regular-webfont.ded93370.woff"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.a0b1b257.js",
+    "static/js/2.cac89be4.chunk.js",
+    "static/css/main.1676c273.chunk.css",
+    "static/js/main.04db05f9.chunk.js"
+  ]
+}
